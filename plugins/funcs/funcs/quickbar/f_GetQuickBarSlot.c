@@ -25,15 +25,14 @@ void Func_GetQuickBarSlot (CGameObject *ob, char *value) {
     const CNWSCreature *cre;
 
     if (ob == NULL                                    ||
-        (cre = ob->vtable->AsNWSCreature(ob)) == NULL ||
-        !cre->cre_is_pc                               ||
-        cre->cre_quickbar == NULL                     ||
-        (slot = atoi(value)) < 0 || slot >= 36) {
+            (cre = ob->vtable->AsNWSCreature(ob)) == NULL ||
+            !cre->cre_is_pc                               ||
+            cre->cre_quickbar == NULL                     ||
+            (slot = atoi(value)) < 0 || slot >= 36) {
 
         snprintf(value, strlen(value), "-1");
         return;
     }
-
     switch(cre->cre_quickbar[slot].qb_type) {
         // Items, the hex qb_objids can be determined with StringToObject on the scripting side
         case 1: {
@@ -76,7 +75,6 @@ void Func_GetQuickBarSlot (CGameObject *ob, char *value) {
     }
 
     return;
-
 }
 
 
