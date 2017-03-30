@@ -72,7 +72,6 @@ unsigned char d_ret_code_vc[0x20];
 unsigned char d_ret_code_ap[0x20];
 unsigned char d_ret_code_cp[0x20];
 unsigned char d_ret_code_dp[0x20];
-unsigned char d_ret_code_objdest[0x20];
 
 int (*CNWSPlayer__ValidateCharacter)(CNWSPlayer *pPlayer, int *result);
 
