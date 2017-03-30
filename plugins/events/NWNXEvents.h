@@ -43,8 +43,8 @@
 #define EVENT_TYPE_MAP_PIN_ADDED        15
 #define EVENT_TYPE_MAP_PIN_CHANGED      16
 #define EVENT_TYPE_MAP_PIN_DESTROYED    17
-#define EVENT_TYPE_CREATE_OBJECT        19
-#define NUM_EVENT_TYPES                 19
+#define EVENT_TYPE_CREATE_OBJECT        18
+#define NUM_EVENT_TYPES                 18
 
 enum eNodeType {StartingNode, EntryNode, ReplyNode};
 
