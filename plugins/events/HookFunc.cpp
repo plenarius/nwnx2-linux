@@ -759,33 +759,32 @@ int HookFunctions(bool enableUnsafe)
     dword org_DestroyPin = asmhelp.FindFunctionBySignature("55 89 E5 57 56 53 83 EC 28 8D 5D D8 53 8B 75 08 E8 13 21 13 00 59 5F 6A 01 56 E8");
     dword org_ValidateCharacter = 0x080580BC;
 
-    hook_function (org_SaveChar, (unsigned long)SaveCharHookProc, d_ret_code_sc, 12);
-    hook_function (org_PickPocket, (unsigned long)PickPocketHookProc, d_ret_code_pp, 12);
-    hook_function (org_Attack, (unsigned long)AttackHookProc, d_ret_code_at, 9);
-    hook_function (org_UseItem, (unsigned long)UseItemHookProc, d_ret_code_ui, 12);
-    hook_function (org_ConvSelect, (unsigned long)ConversationNodeSelectHookProc, d_ret_code_cn, 12);
-    hook_function (org_ConditionalScript, (unsigned long)ConditionalScriptHookProc, d_ret_code_cs, 8);
-    hook_function (org_SendServerToPlayerQuickChatMessage, (unsigned long)SendServerToPlayerQuickChatMessageHookProc, d_ret_code_qc, 9);
-    hook_function (org_ExamineItem, (unsigned long)ExamineItemHookProc, d_ret_code_ei, 12);
-    hook_function (org_ExamineCreature, (unsigned long)ExamineCreatureHookProc, d_ret_code_ec, 12);
-    hook_function (org_ExaminePlaceable, (unsigned long)ExaminePlaceableHookProc, d_ret_code_ep, 12);
-    hook_function (org_ExamineDoor, (unsigned long)ExamineDoorHookProc, d_ret_code_ed, 12);
-    hook_function (org_UseSkill, (unsigned long)UseSkillHookProc, d_ret_code_us, 12);
-    hook_function (org_UseFeat, (unsigned long)UseFeatHookProc, d_ret_code_uf, 12);
-    hook_function (org_ToggleMode, (unsigned long)ToggleModeHookProc, d_ret_code_tm, 10);
-    hook_function (org_CastSpell, (unsigned long)CastSpellHookProc, d_ret_code_cz, 12);
-    hook_function (org_TogglePause, (unsigned long)TogglePauseHookProc, d_ret_code_tp, 9);
-    hook_function (org_PossessFamiliar, (unsigned long)PossessFamiliarHookProc, d_ret_code_pf, 9);
-    hook_function (org_ValidateCharacter, (unsigned long)CNWSPlayer__ValidateCharacter_hook, d_ret_code_vc, 12);
-    hook_function (org_AddPin, (unsigned long)AddPinHookProc, d_ret_code_ap, 12);
-    hook_function (org_ChangePin, (unsigned long)ChangePinHookProc, d_ret_code_cp, 12);
-    hook_function (org_DestroyPin, (unsigned long)DestroyPinHookProc, d_ret_code_dp, 12);
+    hook_function(org_SaveChar, (unsigned long)SaveCharHookProc, d_ret_code_sc, 12);
+    hook_function(org_PickPocket, (unsigned long)PickPocketHookProc, d_ret_code_pp, 12);
+    hook_function(org_Attack, (unsigned long)AttackHookProc, d_ret_code_at, 9);
+    hook_function(org_UseItem, (unsigned long)UseItemHookProc, d_ret_code_ui, 12);
+    hook_function(org_ConvSelect, (unsigned long)ConversationNodeSelectHookProc, d_ret_code_cn, 12);
+    hook_function(org_ConditionalScript, (unsigned long)ConditionalScriptHookProc, d_ret_code_cs, 8);
+    hook_function(org_SendServerToPlayerQuickChatMessage, (unsigned long)SendServerToPlayerQuickChatMessageHookProc, d_ret_code_qc, 9);
+    hook_function(org_ExamineItem, (unsigned long)ExamineItemHookProc, d_ret_code_ei, 12);
+    hook_function(org_ExamineCreature, (unsigned long)ExamineCreatureHookProc, d_ret_code_ec, 12);
+    hook_function(org_ExaminePlaceable, (unsigned long)ExaminePlaceableHookProc, d_ret_code_ep, 12);
+    hook_function(org_ExamineDoor, (unsigned long)ExamineDoorHookProc, d_ret_code_ed, 12);
+    hook_function(org_UseSkill, (unsigned long)UseSkillHookProc, d_ret_code_us, 12);
+    hook_function(org_UseFeat, (unsigned long)UseFeatHookProc, d_ret_code_uf, 12);
+    hook_function(org_ToggleMode, (unsigned long)ToggleModeHookProc, d_ret_code_tm, 10);
+    hook_function(org_CastSpell, (unsigned long)CastSpellHookProc, d_ret_code_cz, 12);
+    hook_function(org_TogglePause, (unsigned long)TogglePauseHookProc, d_ret_code_tp, 9);
+    hook_function(org_PossessFamiliar, (unsigned long)PossessFamiliarHookProc, d_ret_code_pf, 9);
+    hook_function(org_ValidateCharacter, (unsigned long)CNWSPlayer__ValidateCharacter_hook, d_ret_code_vc, 12);
+    hook_function(org_AddPin, (unsigned long)AddPinHookProc, d_ret_code_ap, 12);
+    hook_function(org_ChangePin, (unsigned long)ChangePinHookProc, d_ret_code_cp, 12);
+    hook_function(org_DestroyPin, (unsigned long)DestroyPinHookProc, d_ret_code_dp, 12);
     *(dword*)&CNWSPlayer__ValidateCharacter = (dword)&d_ret_code_vc;
 
     if (enableUnsafe) {
         HookEvent(EVENT_CORE_PLUGINSLOADED, PluginsLoaded);
     }
-
 
     PrintHookInfo(org_SaveChar, "SaveChar");
     PrintHookInfo(org_PickPocket, "ActPickPocket");

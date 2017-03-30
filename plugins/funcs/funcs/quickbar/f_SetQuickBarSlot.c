@@ -17,22 +17,26 @@
     along with this program; if not, write to the Free Software
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  ***************************************************************************/
+
 #include <string.h>
 #include <stdio.h>
 #include "NWNXFuncs.h"
 
 
-void Func_SetQuickBarSlot (CGameObject *ob, char *value) {
+void Func_SetQuickBarSlot(CGameObject *ob, char *value)
+{
     int slot, qb_type, qb_class, qb_id, qb_meta, qb_objid1, qb_objid2;
     CNWSCreature *cre;
     int iLenValue = strlen(value);
     if (ob == NULL                                    ||
-        (cre = ob->vtable->AsNWSCreature(ob)) == NULL ||
-        !cre->cre_is_pc                               ||
-        cre->cre_quickbar == NULL) 
-    {
+            (cre = ob->vtable->AsNWSCreature(ob)) == NULL ||
+            !cre->cre_is_pc                               ||
+            cre->cre_quickbar == NULL) {
+
         snprintf(value, iLenValue, "-1");
+        return;
     }
+
     char *tok = value;
     char *params[7];
     char valuestr[iLenValue];
@@ -61,6 +65,7 @@ void Func_SetQuickBarSlot (CGameObject *ob, char *value) {
     for (k=0; k < n; k++) {
         pos += sprintf(&valuestr[pos], "%s ", params[k]);
     }
+
     int valuelen = strlen(valuestr);
     valuestr[valuelen - 1] = 0;
 

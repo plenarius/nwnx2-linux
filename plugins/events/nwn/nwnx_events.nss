@@ -196,3 +196,4 @@ int GetScriptReturnValue()
     SetLocalString(GetModule(), "NWNX!EVENTS!GET_SCRIPT_RETURN_VALUE", "         ");
     return StringToInt(GetLocalString(GetModule(), "NWNX!EVENTS!GET_SCRIPT_RETURN_VALUE"));
 }
+
