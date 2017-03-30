@@ -118,7 +118,7 @@ int CheckForExistingQuickBar(string sPCID, string sEncName)
     string sSQL = "SELECT id FROM player_qb WHERE player_id = "+sPCID+" AND name = '"+sEncName+"'";
     SQLExecDirect(sSQL);
     if (SQLFetch() == SQL_SUCCESS)
-        return 1;
+        return StringToInt(SQLGetData(1));
     return 0;
 }
 
@@ -156,7 +156,7 @@ void ListQuickBars(object oPC)
     else
         SendMessageToPC(oPC, "You have no quickbars saved.");
 }
-my
+
 void SaveQuickBar(object oPC, string sName, int iSilent = 0)
 {
     if (sName == "")
