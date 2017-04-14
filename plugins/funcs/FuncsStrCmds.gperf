@@ -147,6 +147,7 @@ SETQUICKBARSLOT,                       Func_SetQuickBarSlot
 SETRACIALTYPE,                         Func_SetRacialType
 SETREMAININGSPELLSLOTS,                Func_SetRemainingSpellSlots
 SETSAVINGTHROWBONUS,                   Func_SetSavingThrowBonus
+SETISSTATIC,                           Func_SetIsStatic
 SETSKILLRANK,                          Func_SetSkillRank
 SETSOUNDSET,                           Func_SetSoundset
 SETSPECIALABILITY,                     Func_SetSpecialAbility

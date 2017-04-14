@@ -94,6 +94,7 @@ add_module(funcs NWNXFuncs plugin-funcs
 	funcs/other/f_SetTrapCreator
 	funcs/other/f_USleep
 	funcs/placeable/f_GetIsStatic
+	funcs/placeable/f_SetIsStatic
 	funcs/placeable/f_SetPlaceableAppearance
 	funcs/quickbar/f_GetQuickBarSlot
 	funcs/quickbar/f_SetQuickBarSlot
