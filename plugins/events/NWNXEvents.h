@@ -41,10 +41,11 @@
 #define EVENT_TYPE_VALIDATE_CHARACTER   13
 #define EVENT_TYPE_DESTROY_OBJECT       14
 #define EVENT_TYPE_CREATE_OBJECT        15
-#define EVENT_TYPE_MAP_PIN_ADDED        16
-#define EVENT_TYPE_MAP_PIN_CHANGED      17
-#define EVENT_TYPE_MAP_PIN_DESTROYED    18
-#define NUM_EVENT_TYPES                 19
+#define EVENT_TYPE_DEVASTATING_CRITICAL 16
+#define EVENT_TYPE_MAP_PIN_ADDED        17
+#define EVENT_TYPE_MAP_PIN_CHANGED      18
+#define EVENT_TYPE_MAP_PIN_DESTROYED    19
+#define NUM_EVENT_TYPES                 20
 
 enum eNodeType {StartingNode, EntryNode, ReplyNode};
 

@@ -22,7 +22,7 @@
 #include <dlfcn.h>
 #include <stdarg.h>
 
-#include <limits.h>		/* for PAGESIZE */
+#include <limits.h>     /* for PAGESIZE */
 #ifndef PAGESIZE
 #define PAGESIZE 4096
 #endif
@@ -69,6 +69,7 @@ unsigned char d_ret_code_cz[0x20];
 unsigned char d_ret_code_tp[0x20];
 unsigned char d_ret_code_pf[0x20];
 unsigned char d_ret_code_vc[0x20];
+unsigned char d_ret_code_dc[0x20];
 unsigned char d_ret_code_ap[0x20];
 unsigned char d_ret_code_cp[0x20];
 unsigned char d_ret_code_dp[0x20];
@@ -430,7 +431,7 @@ void ExamineItemHookProc(void *pMessage, CNWSPlayer *pPlayer, dword nObjID)
     asm("leave");
     /*if(bBypass_b) //don't bypass this or the client will draw an empty dialog box
     {
-    	asm("ret");
+        asm("ret");
     }*/
     asm("mov $d_ret_code_ei, %eax");
     asm("jmp *%eax");
@@ -719,6 +720,34 @@ int CNWSObject__dtor(uintptr_t p)
     return 0;
 }
 
+int CNWSCreatureStats__GetEpicWeaponDevastatingCritical_hook(CNWSCreatureStats *pStats, CNWSItem *pItem)
+{
+    int (*original)(CNWSCreatureStats*, CNWSItem*);
+    *(dword*)&original = (dword)&d_ret_code_dc;
+
+    if (original(pStats, pItem))
+    {
+        CNWSCreature *pCreature = pStats->OriginalObject;
+        CNWSCombatRound *pCombatRound = pCreature->CombatRound;
+        CNWSCombatAttackData *pAttackData = pCombatRound->GetAttack(pCombatRound->CurrentAttack);
+
+        events.oItem = pItem->ObjectID;
+        events.oTarget = pCreature->AttackTarget;
+        events.nEventSubID = pAttackData->GetTotalDamage(1);
+        events.nReturnValue = 0;
+
+        if (!events.FireEvent(pCreature->ObjectID, EVENT_TYPE_DEVASTATING_CRITICAL))
+            return 1; // No bypass, regular devcrit handling
+
+        // Return value controls whether cleave should activate if the event was bypassed
+        pAttackData->KillingBlow = !!events.nReturnValue;
+    }
+
+    // Either no devcrit applicable, or event bypassed
+    return 0;
+}
+
+
 int PluginsLoaded(uintptr_t p)
 {
     HookEvent(EVENT_CORE_OBJECT_CREATED, CNWSObject__ctor);
@@ -757,6 +786,7 @@ int HookFunctions(bool enableUnsafe)
     dword org_ChangePin = asmhelp.FindFunctionBySignature("55 89 E5 57 56 53 83 EC 68 8D 45 C8 8B 75 08 C7 45");
     dword org_DestroyPin = asmhelp.FindFunctionBySignature("55 89 E5 57 56 53 83 EC 28 8D 5D D8 53 8B 75 08 E8 13 21 13 00 59 5F 6A 01 56 E8");
     dword org_ValidateCharacter = 0x080580BC;
+    dword org_GetEpicWeaponDevastatingCritical = 0x08156CCC;
 
     hook_function(org_SaveChar, (unsigned long)SaveCharHookProc, d_ret_code_sc, 12);
     hook_function(org_PickPocket, (unsigned long)PickPocketHookProc, d_ret_code_pp, 12);
@@ -776,9 +806,11 @@ int HookFunctions(bool enableUnsafe)
     hook_function(org_TogglePause, (unsigned long)TogglePauseHookProc, d_ret_code_tp, 9);
     hook_function(org_PossessFamiliar, (unsigned long)PossessFamiliarHookProc, d_ret_code_pf, 9);
     hook_function(org_ValidateCharacter, (unsigned long)CNWSPlayer__ValidateCharacter_hook, d_ret_code_vc, 12);
+    hook_function(org_GetEpicWeaponDevastatingCritical, (unsigned long)CNWSCreatureStats__GetEpicWeaponDevastatingCritical_hook, d_ret_code_dc, 9);
     hook_function(org_AddPin, (unsigned long)AddPinHookProc, d_ret_code_ap, 12);
     hook_function(org_ChangePin, (unsigned long)ChangePinHookProc, d_ret_code_cp, 12);
     hook_function(org_DestroyPin, (unsigned long)DestroyPinHookProc, d_ret_code_dp, 12);
+
     *(dword*)&CNWSPlayer__ValidateCharacter = (dword)&d_ret_code_vc;
 
     if (enableUnsafe) {
@@ -806,6 +838,7 @@ int HookFunctions(bool enableUnsafe)
     PrintHookInfo(org_ChangePin, "ChangePin");
     PrintHookInfo(org_DestroyPin, "DestroyPin");
     PrintHookInfo(org_ValidateCharacter, "ValidateCharacter");
+    PrintHookInfo(org_GetEpicWeaponDevastatingCritical, "GetEpicWeaponDevastatingCritical");
 
     return (org_SaveChar && org_PickPocket && org_Attack && org_UseItem &&
             org_ConvSelect && org_ConditionalScript &&
@@ -813,10 +846,11 @@ int HookFunctions(bool enableUnsafe)
             org_ExamineDoor && org_UseSkill && org_UseFeat &&
             org_ToggleMode && org_CastSpell &&
             org_TogglePause && org_PossessFamiliar &&
+            org_SendServerToPlayerQuickChatMessage &&
+            org_GetEpicWeaponDevastatingCritical && 
             org_AddPin &&
             org_ChangePin &&
-            org_DestroyPin &&
-            org_SendServerToPlayerQuickChatMessage);
+            org_DestroyPin);
 }
 
 

@@ -34,11 +34,6 @@ bool CNWNXResMan::OnCreate(gline *config, const char *LogDir)
     return true;
 }
 
-char* CNWNXResMan::OnRequest(char* gameObject, char* Request, char* Parameters)
-{
-    return NULL;
-}
-
 bool CNWNXResMan::OnRelease()
 {
     Log(0, "o Shutdown.\n");
@@ -54,7 +49,7 @@ void* CNWNXResMan::DemandRes(CExoResMan *pResMan, CRes *cRes, const CResRef &res
         return NULL;
 
     if (cRes == NULL) {
-        Log(5, "o Request for internal resource = %s (type %X)\n", resRef, resType);
+        Log(5, "o Request for internal resource = %s (type %X)\n", resRef.GetResRefStr(), resType);
         return NULL;
     }
 
