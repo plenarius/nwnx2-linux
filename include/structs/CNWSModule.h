@@ -62,6 +62,14 @@ struct CNWSModule_s {
     uint32_t                    field_80;
     uint32_t                    field_84;
     uint32_t                    field_88;
+    uint32_t                    field_8C;
+    uint32_t                    field_90;
+    uint32_t                    field_94;
+    uint32_t                    field_98;
+    uint32_t                    field_9C;
+    uint32_t                    field_A0;
+    uint32_t                    field_A4;
+
     CNWSScriptVarTable          mod_vartable;
 };
 

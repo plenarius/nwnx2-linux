@@ -782,12 +782,12 @@ int HookFunctions(bool enableUnsafe)
     dword org_CastSpell = asmhelp.FindFunctionBySignature("55 89 E5 57 56 53 81 EC 1C 01 00 00 8A 45 3C");
     dword org_TogglePause = asmhelp.FindFunctionBySignature("55 89 E5 57 56 53 83 EC 4C 8A 45 0C 88 45 D3 8B 75 08 8B 86 18 00 01 00 89 45 CC 8A 96 A0 00 01 00 31 C0 84 55 D3 0F 95 C0 3B 45 10 0F 84 47 03 00 00 83 7D 10 01 75 4C 0A 55 D3 83 EC 0C 88 96 A0 00 01 00 FF B6 68 00 01 00 E8 ** ** ** ** 83 C4 10 F6 86 A0 00 01 00 02 B0 02 75 09 8A 86 A0 00 01 00");
     dword org_PossessFamiliar = asmhelp.FindFunctionBySignature("55 89 E5 57 56 53 83 EC 20 6A 01 6A 03 FF 75 08 E8 ** ** ** ** 83 C4 10 3D 00 00 00 7F 0F 84 01 03 00 00 83 EC 08 6A 00 FF 75 08 C7 45 F0 00 00 00 00 E8 ** ** ** ** 83 C4 10 85 C0 74 19 83 EC 18 6A 01 FF 75 08 E8 ** ** ** ** 83 C4 14 50 E8 ** ** ** ** 83 C4 10 8B 45 08 81 78 58 00 00 00 7F 74 0C");
+    dword org_ValidateCharacter = 0x080580BC;
+    dword org_GetEpicWeaponDevastatingCritical = 0x08156CCC;
     dword org_AddPin = asmhelp.FindFunctionBySignature("55 89 E5 57 56 53 81 EC 98 00 00 00 8D 7D C8 C7 45 D8");
     dword org_ChangePin = asmhelp.FindFunctionBySignature("55 89 E5 57 56 53 83 EC 68 8D 45 C8 8B 75 08 C7 45");
     dword org_DestroyPin = asmhelp.FindFunctionBySignature("55 89 E5 57 56 53 83 EC 28 8D 5D D8 53 8B 75 08 E8 13 21 13 00 59 5F 6A 01 56 E8");
-    dword org_ValidateCharacter = 0x080580BC;
-    dword org_GetEpicWeaponDevastatingCritical = 0x08156CCC;
-
+    
     hook_function(org_SaveChar, (unsigned long)SaveCharHookProc, d_ret_code_sc, 12);
     hook_function(org_PickPocket, (unsigned long)PickPocketHookProc, d_ret_code_pp, 12);
     hook_function(org_Attack, (unsigned long)AttackHookProc, d_ret_code_at, 9);
@@ -810,7 +810,6 @@ int HookFunctions(bool enableUnsafe)
     hook_function(org_AddPin, (unsigned long)AddPinHookProc, d_ret_code_ap, 12);
     hook_function(org_ChangePin, (unsigned long)ChangePinHookProc, d_ret_code_cp, 12);
     hook_function(org_DestroyPin, (unsigned long)DestroyPinHookProc, d_ret_code_dp, 12);
-
     *(dword*)&CNWSPlayer__ValidateCharacter = (dword)&d_ret_code_vc;
 
     if (enableUnsafe) {
@@ -834,11 +833,11 @@ int HookFunctions(bool enableUnsafe)
     PrintHookInfo(org_CastSpell, "CastSpell");
     PrintHookInfo(org_TogglePause, "TogglePause");
     PrintHookInfo(org_PossessFamiliar, "PossessFamiliar");
+    PrintHookInfo(org_ValidateCharacter, "ValidateCharacter");
+    PrintHookInfo(org_GetEpicWeaponDevastatingCritical, "GetEpicWeaponDevastatingCritical");
     PrintHookInfo(org_AddPin, "AddPin");
     PrintHookInfo(org_ChangePin, "ChangePin");
     PrintHookInfo(org_DestroyPin, "DestroyPin");
-    PrintHookInfo(org_ValidateCharacter, "ValidateCharacter");
-    PrintHookInfo(org_GetEpicWeaponDevastatingCritical, "GetEpicWeaponDevastatingCritical");
 
     return (org_SaveChar && org_PickPocket && org_Attack && org_UseItem &&
             org_ConvSelect && org_ConditionalScript &&
