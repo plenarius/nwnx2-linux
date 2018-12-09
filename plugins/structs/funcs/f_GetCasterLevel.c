@@ -1,6 +1,7 @@
+
 /***************************************************************************
-    Events plugin for NWNX - hooks interface
-    (c) 2006 virusman (virusman@virusman.ru)
+    NWNXFuncs.cpp - Implementation of the CNWNXFuncs class.
+    Copyright (C) 2007 Doug Swarin (zac@intertex.net)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -17,26 +18,21 @@
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  ***************************************************************************/
 
-#if !defined(HookFunc_h_)
-#define HookFunc_h_
+#include "NWNXStructs.h"
 
-#include "typedefs.h"
-#include "NWNStructures.h"
-#include "CExoLinkedList.h"
-#include "CExoLocString.h"
-#include <stdint.h>
-#include "nx_hook.h"
+extern volatile CGameEffect *Hook_Struct_Last;
 
-int HookFunctions();
 
-void CreateAreaListItem(void *pAreaList, char* sAreaResRef);
-int LoadAreaNum(void *pModule, int nAreaNum);
-void AddAreaToAllCreatures(dword nAreaID);
-void NWNXCreateArea(void *pModule, char *sResRef);
-void NWNXDestroyArea(void *pModule, dword nAreaID);
-void NWNXSetAreaName(CNWSArea *pArea, char *sNewName);
-void AddAreaToCreature(CNWSModule *pModule, CNWSCreature *pObject, dword nAreaID);
+void Func_GetCasterLevel(CGameObject *ob, char *value)
+{
+    CGameEffect *eff = (CGameEffect *)Hook_Struct_Last;
 
-void InitConstants();
+	int lvl = eff->eff_c_level;
+	if (lvl < 0)
+		lvl = 0;
 
-#endif
+    snprintf(value, strlen(value), "%d", lvl);
+}
+
+
+/* vim: set sw=4: */

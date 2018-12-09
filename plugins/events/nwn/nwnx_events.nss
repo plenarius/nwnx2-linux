@@ -14,9 +14,10 @@ const int EVENT_TYPE_POSSESS_FAMILIAR   = 12;
 const int EVENT_TYPE_VALIDATE_CHARACTER = 13;
 const int EVENT_TYPE_DESTROY_OBJECT     = 14;
 const int EVENT_TYPE_CREATE_OBJECT      = 15;
-const int EVENT_TYPE_MAP_PIN_ADDED      = 16;
-const int EVENT_TYPE_MAP_PIN_CHANGED    = 17;
-const int EVENT_TYPE_MAP_PIN_DESTROYED  = 18;
+const int EVENT_TYPE_DEVASTATING_CRITICAL = 16;
+const int EVENT_TYPE_MAP_PIN_ADDED      = 17;
+const int EVENT_TYPE_MAP_PIN_CHANGED    = 18;
+const int EVENT_TYPE_MAP_PIN_DESTROYED  = 19;
 
 // DEPRECATED
 // For backwards compatibility only - use above constants instead

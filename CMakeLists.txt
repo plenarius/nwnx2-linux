@@ -27,6 +27,7 @@ if(POLICY CMP0018)
     cmake_policy(SET CMP0018 OLD)
 endif()
 
+set(CMAKE_SYSTEM_PROCESSOR "i386")
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMakeModules)
 
 # Our must-have flags for compilers
@@ -38,7 +39,7 @@ SET(OUR_CFLAGS_MUST_HAVES "${OUR_CFLAGS_MUST_HAVES} -m32")
 
 # - no-omit-frame-pointer: breaks assembly on -O1/-O2 for some plugins
 # - no-accumulate-outgoing-args: same
-SET(OUR_CFLAGS_MUST_HAVES "${OUR_CFLAGS_MUST_HAVES} -mno-accumulate-outgoing-args -fno-omit-frame-pointer")
+SET(OUR_CFLAGS_MUST_HAVES "${OUR_CFLAGS_MUST_HAVES} -mno-accumulate-outgoing-args -fno-omit-frame-pointer -fno-pic")
 # - warnings: self-explanatory
 SET(OUR_CFLAGS_MUST_HAVES "${OUR_CFLAGS_MUST_HAVES} -Wall -Wextra -Wno-unused-parameter -Wno-unused -Wno-write-strings")
 
@@ -49,6 +50,7 @@ set(CMAKE_ASM_FLAGS "${CMAKE_ASM_FLAGS} ${OUR_CFLAGS_MUST_HAVES}" CACHE STRING "
 # removes stuff like -fPIC, which breaks nwnx plugin loading
 set(CMAKE_SHARED_LIBRARY_C_FLAGS "")
 set(CMAKE_SHARED_LIBRARY_CXX_FLAGS "")
+set(CMAKE_POSITION_INDEPENDENT_CODE FALSE)
 
 # nwnx is currently still kind of broken with -O > 0. Until that's properly fixed
 # and tested, force -O0 for release and relwithdebinfo builds. Individual
@@ -60,6 +62,7 @@ SET(CMAKE_CXX_FLAGS_RELEASE "-O2 -DNDEBUG")
 SET(CMAKE_C_FLAGS_RELWITHDEBINFO "${CMAKE_C_FLAGS_DEBUG} -O2 -DNDEBUG")
 SET(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_DEBUG} -O2 -DNDEBUG")
 
+SET(CMAKE_ASM${ASM_DIALECT}_COMPILE_OBJECT "<CMAKE_ASM${ASM_DIALECT}_COMPILER> <FLAGS> -m32 -o <OBJECT> -c <SOURCE>")
 enable_language(ASM)
 
 find_package(ZLIB REQUIRED)
